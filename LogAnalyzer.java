@@ -24,6 +24,15 @@ public class LogAnalyzer
         // Create the reader to obtain the data.
         reader = new LogfileReader();
     }
+    
+    /**
+     * q12
+     */
+    public LogAnalyzer(String filename)
+    {
+        hourCounts = new int[HOURS_PER_DAY];
+        reader = new LogfileReader(filename);
+    }
 
     /**
      * Analyze the hourly access data from the log file.
@@ -45,8 +54,11 @@ public class LogAnalyzer
     public void printHourlyCounts()
     {
         System.out.println("Hr: Count");
-        for(int hour = 0; hour < hourCounts.length; hour++) {
+        //q10
+        int hour = 0;
+        while(hour < hourCounts.length) {
             System.out.println(hour + ": " + hourCounts[hour]);
+            ++hour;
         }
     }
     
@@ -56,5 +68,47 @@ public class LogAnalyzer
     public void printData()
     {
         reader.printData();
+    }
+    
+    /** 
+    * q14
+    * Return the number of accesses recorded in the log file. 
+    */
+    public int numberOfAccesses() 
+    {
+        int total = 0;
+        for(int i = 0; i < hourCounts.length; ++i){
+            total = total + hourCounts[i];
+        }
+        return total;
+    }
+    
+    public int busiestHour()
+    {
+        boolean found = false;
+        int currentLargestIndex = 0;
+        int totalCounted = 0;
+        int accesses = numberOfAccesses();
+        for(int i = 0; !found; ++i){
+            if(hourCounts[i]>hourCounts[currentLargestIndex]){
+                currentLargestIndex=i;
+            }
+            totalCounted = totalCounted+hourCounts[i];
+            if(accesses-totalCounted<=hourCounts[currentLargestIndex]){
+                found = true;
+            }
+        }
+        return currentLargestIndex;
+    }
+    
+    public int quietestHour()
+    {
+        int currentSmallestIndex = 0;
+        for(int i = 0; i<hourCounts.length; ++i){
+            if(hourCounts[i]<hourCounts[currentSmallestIndex]){
+                currentSmallestIndex=i;
+            }
+        }
+        return currentSmallestIndex;
     }
 }

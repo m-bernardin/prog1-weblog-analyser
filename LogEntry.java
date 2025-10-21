@@ -83,7 +83,7 @@ public class LogEntry implements Comparable<LogEntry>
     {
         StringBuilder theData = new StringBuilder();
         for(int value : dataValues) {
-           // Prefix a leading zero on single digit numbers.
+            // Prefix a leading zero on single digit numbers.
             if(value < 10) {
                 theData.append('0');
             }
