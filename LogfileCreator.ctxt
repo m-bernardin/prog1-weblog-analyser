@@ -10,4 +10,6 @@ comment2.text=\r\n\ Create\ a\ file\ of\ random\ log\ entries.\r\n\ @param\ file
 comment3.params=
 comment3.target=LogEntry\ createEntry()
 comment3.text=\r\n\ Create\ a\ single\ (random)\ entry\ for\ a\ log\ file.\r\n\ @return\ A\ log\ entry\ containing\ random\ data.\r\n
-numComments=4
+comment4.params=
+comment4.target=int\ getStatusCode()
+numComments=5

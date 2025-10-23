@@ -13,6 +13,7 @@ public class LogAnalyzer
     // Where to calculate the hourly access counts.
     private int[] hourCounts;
     private int[] dayCounts;
+    private HashMap<Integer,Integer> statusCounts;
     // Use a LogfileReader to access the data.
     private LogfileReader reader;
 
@@ -25,6 +26,7 @@ public class LogAnalyzer
         // access counts.
         hourCounts = new int[HOURS_PER_DAY];
         dayCounts = new int[DAYS_PER_MONTH];
+        statusCounts = new HashMap<>();
         // Create the reader to obtain the data.
         reader = new LogfileReader();
     }
@@ -41,7 +43,7 @@ public class LogAnalyzer
     /**
      * Analyze the hourly access data from the log file.
      */
-    public void analyzeHourlyData()
+    private void analyzeHourlyData()
     {
         while(reader.hasNext()) {
             LogEntry entry = reader.next();
@@ -53,12 +55,25 @@ public class LogAnalyzer
     /**
      * Analyze the hourly access data from the log file.
      */
-    public void analyzeDailyData()
+    private void analyzeDailyData()
     {
         while(reader.hasNext()){
             LogEntry entry = reader.next();
             int day = entry.getDay();
             dayCounts[day]++;
+        }
+    }
+    
+    /**
+     * Analyze the hourly access data from the log file.
+     */
+    private void analyzeStatusData()
+    {
+        while(reader.hasNext()){
+            LogEntry entry = reader.next();
+            int status = entry.getStatusCode();
+            int amount = statusCounts.getOrDefault(status, 0);
+            statusCounts.put(status, ++amount);
         }
     }
     
@@ -69,6 +84,7 @@ public class LogAnalyzer
      */
     public void printHourlyCounts()
     {
+        analyzeHourlyData();
         System.out.println("Hr: Count");
         //q10
         int hour = 0;
@@ -91,6 +107,13 @@ public class LogAnalyzer
             System.out.println((day+1) + ": " + dayCounts[day]);
             ++day;
         }
+    }
+    
+    public void printStatusCounts()
+    {
+        analyzeStatusData();
+        System.out.println("Status code: Count");
+        
     }
     
     /**

@@ -37,7 +37,7 @@ public class LogfileReader implements Iterator<LogEntry>
     public LogfileReader(String filename)
     {
         // The format for the data.
-        format = "Year Month(1-12) Day Hour Minute";       
+        format = "Year Month(1-12) Day Hour Minute Status";       
         // Where to store the data.
         entries = new ArrayList<>();
 
