@@ -59,3 +59,5 @@ q13.
     }
     
 q17. it returns the earliest hour
+
+part ii:

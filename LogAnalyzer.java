@@ -9,8 +9,10 @@ import java.util.*;
 public class LogAnalyzer
 {
     public static final int HOURS_PER_DAY = 24;
+    public static final int DAYS_PER_MONTH = 32;
     // Where to calculate the hourly access counts.
     private int[] hourCounts;
+    private int[] dayCounts;
     // Use a LogfileReader to access the data.
     private LogfileReader reader;
 
@@ -22,6 +24,7 @@ public class LogAnalyzer
         // Create the array object to hold the hourly
         // access counts.
         hourCounts = new int[HOURS_PER_DAY];
+        dayCounts = new int[DAYS_PER_MONTH];
         // Create the reader to obtain the data.
         reader = new LogfileReader();
     }
@@ -48,6 +51,18 @@ public class LogAnalyzer
     }
 
     /**
+     * Analyze the hourly access data from the log file.
+     */
+    public void analyzeDailyData()
+    {
+        while(reader.hasNext()){
+            LogEntry entry = reader.next();
+            int day = entry.getDay();
+            dayCounts[day]++;
+        }
+    }
+    
+    /**
      * Print the hourly counts.
      * These should have been set with a prior
      * call to analyzeHourlyData.
@@ -60,6 +75,49 @@ public class LogAnalyzer
         while(hour < hourCounts.length) {
             System.out.println(hour + ": " + hourCounts[hour]);
             ++hour;
+        }
+    }
+    
+    /**
+     * Print the daily counts.
+     * q19
+     */
+    public void printDailyCounts()
+    {
+        analyzeDailyData();
+        System.out.println("Day: Count");
+        int day = 0;
+        while(day < dayCounts.length) {
+            System.out.println((day+1) + ": " + dayCounts[day]);
+            ++day;
+        }
+    }
+    
+    /**
+     * this doesnt do anything because calendar doesnt work how i expected it to and i dont feel like figuring it out right now, 
+     * but i may implement what it was intende for in the future
+     */
+    public String convertDayNames(int dayNum)
+    {
+        if(dayNum==0){
+            return "Sunday";
+        }
+        else if(dayNum==1){
+            return "Monday";
+        }
+        else if(dayNum==2){
+            return "Tuesday";
+        }else if(dayNum==3){
+            return "Wednesday";
+        }
+        else if(dayNum==4){
+            return "Thursday";
+        }
+        else if(dayNum==5){
+            return "Friday";
+        }
+        else{
+            return "Saturday";
         }
     }
     
@@ -167,6 +225,62 @@ public class LogAnalyzer
             range = "18-19";
         }
         else if(currentLargestIndex==10){
+            range = "20-21";
+        }
+        else{
+            range = "22-23";
+        }
+        return range;
+    }
+    
+    /**
+     * q19
+     */
+    public String quietestTwoHours()
+    {
+        boolean found = false;
+        ArrayList<Integer> twoHours = new ArrayList<>();
+        int currentSmallestIndex = 0;
+        String range;
+        for(int i = 0; i<hourCounts.length; i+=2){
+            twoHours.add(hourCounts[i]+hourCounts[i+1]);
+        }
+        for(int j = 0; !found; ++j){
+            if(twoHours.get(j)>twoHours.get(currentSmallestIndex)){
+                currentSmallestIndex=j;
+            }
+        }
+        if(currentSmallestIndex==0){
+            range = "0-1";
+        }
+        else if(currentSmallestIndex==1){
+            range = "2-3";
+        }
+        else if(currentSmallestIndex==2){
+            range = "4-5";
+        }
+        else if(currentSmallestIndex==3){
+            range = "6-7";
+        }
+        else if(currentSmallestIndex==4){
+            range = "8-9";
+        }
+        else if(currentSmallestIndex==5){
+            range = "10-11";
+        }
+        else if(currentSmallestIndex==6){
+            range = "12-13";
+        }
+        else if(currentSmallestIndex==7){
+            range = "14-15";
+        }
+        else if(currentSmallestIndex==8){
+            range = "16-17";
+        }
+        else if(currentSmallestIndex==9){
+            range = "18-19";
+        }
+        else if(currentSmallestIndex==10){
             range = "20-21";
         }
         else{
