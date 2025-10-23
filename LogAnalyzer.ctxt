@@ -25,4 +25,5 @@ comment8.params=
 comment8.target=int\ quietestHour()
 comment9.params=
 comment9.target=java.lang.String\ busiestTwoHours()
+comment9.text=\r\n\ q18\r\n
 numComments=10

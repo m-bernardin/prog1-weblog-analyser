@@ -113,6 +113,9 @@ public class LogAnalyzer
         return currentSmallestIndex;
     }
     
+    /**
+     * q18
+     */
     public String busiestTwoHours()
     {
         boolean found = false;
