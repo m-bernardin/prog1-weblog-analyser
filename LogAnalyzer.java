@@ -1,3 +1,4 @@
+import java.util.*;
 
 /**
  * Read web server data and analyse hourly access patterns.
@@ -110,5 +111,64 @@ public class LogAnalyzer
             }
         }
         return currentSmallestIndex;
+    }
+    
+    public String busiestTwoHours()
+    {
+        boolean found = false;
+        ArrayList<Integer> twoHours = new ArrayList<>();
+        int currentLargestIndex = 0;
+        int totalCounted = 0;
+        int accesses = numberOfAccesses();
+        String range;
+        for(int i = 0; i<hourCounts.length; i+=2){
+            twoHours.add(hourCounts[i]+hourCounts[i+1]);
+        }
+        for(int j = 0; !found; ++j){
+            if(twoHours.get(j)>twoHours.get(currentLargestIndex)){
+                currentLargestIndex=j;
+            }
+            totalCounted = totalCounted+twoHours.get(j);
+            if(accesses-totalCounted<=twoHours.get(currentLargestIndex)){
+                found = true;
+            }
+        }
+        if(currentLargestIndex==0){
+            range = "0-1";
+        }
+        else if(currentLargestIndex==1){
+            range = "2-3";
+        }
+        else if(currentLargestIndex==2){
+            range = "4-5";
+        }
+        else if(currentLargestIndex==3){
+            range = "6-7";
+        }
+        else if(currentLargestIndex==4){
+            range = "8-9";
+        }
+        else if(currentLargestIndex==5){
+            range = "10-11";
+        }
+        else if(currentLargestIndex==6){
+            range = "12-13";
+        }
+        else if(currentLargestIndex==7){
+            range = "14-15";
+        }
+        else if(currentLargestIndex==8){
+            range = "16-17";
+        }
+        else if(currentLargestIndex==9){
+            range = "18-19";
+        }
+        else if(currentLargestIndex==10){
+            range = "20-21";
+        }
+        else{
+            range = "22-23";
+        }
+        return range;
     }
 }

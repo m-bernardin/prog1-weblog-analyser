@@ -57,3 +57,5 @@ q13.
         }
         return total;
     }
+    
+q17. it returns the earliest hour
