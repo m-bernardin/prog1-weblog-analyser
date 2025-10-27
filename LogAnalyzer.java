@@ -74,6 +74,7 @@ public class LogAnalyzer
             int status = entry.getStatusCode();
             int amount = statusCounts.getOrDefault(status, 0);
             statusCounts.put(status, ++amount);
+            
         }
     }
     
@@ -113,12 +114,14 @@ public class LogAnalyzer
     {
         analyzeStatusData();
         System.out.println("Status code: Count");
-        
+        for(Integer code : statusCounts.keySet()){
+            System.out.println(code + ": " + statusCounts.get(code) + (statusCounts.get(code)/numberOfAccesses()*100) + "(% of total)");
+        }
     }
     
     /**
      * this doesnt do anything because calendar doesnt work how i expected it to and i dont feel like figuring it out right now, 
-     * but i may implement what it was intende for in the future
+     * but i may implement what it was intended for in the future
      */
     public String convertDayNames(int dayNum)
     {
@@ -158,6 +161,7 @@ public class LogAnalyzer
     */
     public int numberOfAccesses() 
     {
+        analyzeHourlyData();
         int total = 0;
         for(int i = 0; i < hourCounts.length; ++i){
             total = total + hourCounts[i];
@@ -165,8 +169,14 @@ public class LogAnalyzer
         return total;
     }
     
+    public void numberOfEntries()
+    {
+        
+    }
+    
     public int busiestHour()
     {
+        analyzeHourlyData();
         boolean found = false;
         int currentLargestIndex = 0;
         int totalCounted = 0;
@@ -185,6 +195,7 @@ public class LogAnalyzer
     
     public int quietestHour()
     {
+        analyzeHourlyData();
         int currentSmallestIndex = 0;
         for(int i = 0; i<hourCounts.length; ++i){
             if(hourCounts[i]<hourCounts[currentSmallestIndex]){
@@ -199,6 +210,7 @@ public class LogAnalyzer
      */
     public String busiestTwoHours()
     {
+        analyzeHourlyData();
         boolean found = false;
         ArrayList<Integer> twoHours = new ArrayList<>();
         int currentLargestIndex = 0;
@@ -261,6 +273,7 @@ public class LogAnalyzer
      */
     public String quietestTwoHours()
     {
+        analyzeHourlyData();
         boolean found = false;
         ArrayList<Integer> twoHours = new ArrayList<>();
         int currentSmallestIndex = 0;
